@@ -60,6 +60,11 @@ SELENIUM_TEST(selenium_locator_id, SimpleTestApp)
   BOOST_TEST(nameInput->id() == "nameInput");
 END_SELENIUM_TEST
 
+SELENIUM_TEST(selenium_locator_missing, SimpleTestApp)
+  auto missing = api.getElement(SeleniumAPI::FindBy::ID, "missing");
+  BOOST_TEST(!missing.has_value());
+END_SELENIUM_TEST
+
 SELENIUM_TEST(selenium_locator_name, SimpleTestApp)
   auto button = api.getElement(SeleniumAPI::FindBy::NAME, "testButton");
   BOOST_REQUIRE(button.has_value());

@@ -167,6 +167,10 @@ WT_DECLARE_WT_MEMBER(1, JavaScriptConstructor, "WStackedWidget", function(APP, w
     }
 
     this.reApplySize();
+
+    if (APP.layouts2) {
+      APP.layouts2.scheduleAdjust();
+    }
   };
 });
 

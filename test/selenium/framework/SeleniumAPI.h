@@ -242,7 +242,7 @@ namespace Selenium {
       }
 
       // Find element
-      PyObject* findMethod = PythonInterpreter::getAttribute(driver_, "find_element");
+      PyObject* findMethod = PythonInterpreter::getAttribute(driver_, "find_elements");
       if (!findMethod) {
         Py_DECREF(locator);
         return std::nullopt;
@@ -255,18 +255,24 @@ namespace Selenium {
         return std::nullopt;
       }
 
-      PyObject* element = PythonInterpreter::callFunction(findMethod, locator, valueArg);
+      PyObject* elements = PythonInterpreter::callFunction(findMethod, locator, valueArg);
       Py_DECREF(valueArg);
       Py_DECREF(locator);
       Py_DECREF(findMethod);
 
-      if (!element) {
-        throw new APIException("Element not found: " + value);
+      if (!PyList_Check(elements)) {
+        Py_DECREF(elements);
+        throw new APIException("Failed to retrieve elements: " + value);
       }
 
-      // Create Element and store the PyObject reference
+      if (PyList_Size(elements) == 0) {
+        Py_DECREF(elements);
+        return std::nullopt;
+      }
+
+      PyObject* element = PyList_GetItem(elements, 0);
       Element elem(element);
-      Py_DECREF(element);
+      Py_DECREF(elements);
 
       return elem;
     }
