@@ -3171,8 +3171,9 @@ void WebSession::notifySignal(const WEvent& e)
 
     LOG_DEBUG("signal: " << *signalE);
 
-    if (type() != EntryPointType::WidgetSet ||
-        (*signalE != "none" && *signalE != "load"))
+    if (signalI.handleSignal &&
+       ( type() != EntryPointType::WidgetSet ||
+         (*signalE != "none" && *signalE != "load")))
       renderer_.setRendered(true);
 
     if (*signalE == "none" || *signalE == "load") {
@@ -3189,6 +3190,13 @@ void WebSession::notifySignal(const WEvent& e)
       // Do nothing
     } else if (*signalE != "poll") {
       propagateFormValues(e, se, signalI);
+
+      if (!signalI.handleSignal) {
+        // This signal was already handled due to signal reordering,
+        // so we only needed to update the form data cache
+        // (see getSignalProcessingOrder()).
+        continue;
+      }
 
       // Save pending changes (e.g. from resource completion)
       // This is needed because we will discard changes from learned

@@ -128,6 +128,12 @@ namespace Selenium {
       return getValue<bool>("is_displayed").value_or(false);
     }
 
+    //! Retrieves whether the Element is selected
+    std::optional<bool> isSelected() const
+    {
+      return getValue<bool>("is_selected");
+    }
+
     //! Retrieves the Element's width
     int width() const
     {
