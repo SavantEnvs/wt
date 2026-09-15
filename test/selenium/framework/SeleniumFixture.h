@@ -27,8 +27,8 @@ namespace Selenium
   public:
     using AppCreator = std::function<std::unique_ptr<Wt::WApplication>(const Wt::WEnvironment&)>;
 
-    SeleniumFixture(const std::string& docroot = ".")
-      : server_(std::make_unique<SeleniumServer>(docroot)),
+    SeleniumFixture(const std::string& docroot = ".", const std::string& configFile = "")
+      : server_(std::make_unique<SeleniumServer>(docroot, configFile)),
       serverThread_(nullptr),
       serverStarted_(false)
     {}

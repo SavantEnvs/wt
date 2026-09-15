@@ -9,12 +9,14 @@
 #include "SeleniumAPI.h"
 #include "SeleniumFixture.h"
 #include "SeleniumWait.h"
+#include "web/Configuration.h"
 
 #include <boost/test/unit_test.hpp>
 
 namespace Selenium {
-  // Helper macro to define a Selenium test case with automatic setup
-#define SELENIUM_TEST(test_name, app_type) \
+  // Helper macros to define a Selenium test case with automatic setup
+
+#define SELENIUM_TEST_WITH_CONFIG_FILE(test_name, app_type, config_file) \
     BOOST_AUTO_TEST_CASE(test_name) \
     { \
       Selenium::SeleniumAPI::Browser type = Selenium::SeleniumAPI::Browser::Chrome; \
@@ -35,7 +37,7 @@ namespace Selenium {
           driverPath = std::string(argv[4]); \
         } \
       } \
-      Selenium::SeleniumTest<app_type> test(type, driverPath); \
+      Selenium::SeleniumTest<app_type> test(type, driverPath, config_file); \
       BOOST_REQUIRE(test.startServer()); \
       auto& api = test.api(); \
       Selenium::SeleniumWait wait(api.driver(), std::chrono::seconds(10)); \
@@ -46,6 +48,8 @@ namespace Selenium {
       (void)api; \
       (void)wait; \
       (void)updateApplication;
+
+#define SELENIUM_TEST(test_name, app_type) SELENIUM_TEST_WITH_CONFIG_FILE(test_name, app_type, "")
 
 #define END_SELENIUM_TEST \
     }
@@ -62,8 +66,9 @@ namespace Selenium {
   public:
     SeleniumTest(SeleniumAPI::Browser browser,
                  const std::string& driverPath,
+                 const std::string& configFile = "",
                  const std::string& docroot = ".")
-      : fixture_(docroot),
+      : fixture_(docroot, configFile),
         driverPath_(driverPath),
         browser_(browser)
     {
@@ -122,6 +127,12 @@ namespace Selenium {
           app->triggerUpdate();
         }
       });
+    }
+
+    //! Retrieves the configuration of the server in the SeleniumFixture.
+    const Wt::Configuration& config()
+    {
+      return fixture_.server().configuration();
     }
 
 
