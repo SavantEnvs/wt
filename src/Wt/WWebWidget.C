@@ -494,6 +494,7 @@ void WWebWidget::anchorAt(WWidget* widget, Orientation orientation)
     setPositionAnchor(widget);
     if (!layoutImpl_->anchorOrientations_.test(orientation)) {
       layoutImpl_->anchorOrientations_ = orientation;
+
       flags_.set(BIT_POSITION_ANCHOR_CHANGED);
     }
 
@@ -2107,22 +2108,25 @@ void WWebWidget::updateDom(DomElement& element, bool all)
           // ensure that we remove those properties
           element.setProperty(Property::StylePositionArea, "");
           element.setProperty(Property::StylePositionTryFallbacks, "");
+          element.setProperty(Property::StyleJustifySelf, "");
         }
       } else {
         WStringStream anchorArea;
         if (layoutImpl_->anchorOrientations_.test(Orientation::Vertical)) {
-          anchorArea << "bottom";
+          anchorArea << "block-end";
         } else {
-          anchorArea << "span-bottom";
+          anchorArea << "span-block-end";
         }
 
         if (layoutImpl_->anchorOrientations_.test(Orientation::Horizontal)) {
-          anchorArea << " right";
+          anchorArea << " inline-end";
         } else {
-          anchorArea << " span-right";
+          anchorArea << " span-inline-end";
         }
 
         element.setProperty(Property::StylePositionArea, anchorArea.str());
+        element.setProperty(Property::StyleJustifySelf, "start");
+        element.setProperty(Property::StyleAlignSelf, "start");
         element.setProperty(Property::StylePositionTryFallbacks, "flip-block, flip-inline, flip-block flip-inline");
       }
 
@@ -2134,6 +2138,8 @@ void WWebWidget::updateDom(DomElement& element, bool all)
       }
       element.removeProperty(Property::StylePositionArea);
       element.removeProperty(Property::StylePositionTryFallbacks);
+      element.removeProperty(Property::StyleJustifySelf);
+      // keep StyleAlignSelf as it may have been set by a Flex layout
     }
     flags_.reset(BIT_POSITION_ANCHOR_CHANGED);
   }

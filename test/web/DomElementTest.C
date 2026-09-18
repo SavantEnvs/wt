@@ -29,8 +29,8 @@ BOOST_AUTO_TEST_CASE( css_name_test )
     "background-color", "background-image", "background-repeat", "background-attachment",
     "background-position", "text-decoration", "white-space", "table-layout", "border-spacing",
     "border-collapse", "page-break-before", "page-break-after", "zoom", "visibility", "display",
-    "-webkit-appearance", "box-sizing", "flex", "flex-direction", "flex-flow", "align-self", "justify-content",
-    "anchor-name", "position-anchor", "position-area", "position-try-fallbacks"
+    "-webkit-appearance", "box-sizing", "flex", "flex-direction", "flex-flow", "align-self", "justify-self",
+    "justify-content", "anchor-name", "position-anchor", "position-area", "position-try-fallbacks"
   };
 
   for (int i = static_cast<int>(Wt::Property::StylePosition); i < static_cast<int>(Wt::Property::LastPlusOne); ++i) {
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE( css_camel_name_test )
     "backgroundAttachment", "backgroundPosition", "textDecoration", "whiteSpace", "tableLayout",
     "borderSpacing", "border-collapse", "pageBreakBefore", "pageBreakAfter", "zoom", "visibility",
     "display", "webKitAppearance", "boxSizing", "flex", "flexDirection", "flexFlow", "alignSelf",
-    "justifyContent", "anchorName", "positionAnchor", "positionArea", "positionTryFallbacks"
+    "justifySelf", "justifyContent", "anchorName", "positionAnchor", "positionArea", "positionTryFallbacks"
   };
 
   for (int i = static_cast<int>(Wt::Property::StylePosition); i < static_cast<int>(Wt::Property::LastPlusOne); ++i) {

@@ -222,6 +222,7 @@ CssPropertyMap createCssNamesMap()
   Wt::Utils::insert(cssNames, Wt::Property::StyleFlexDirection,std::string("flex-direction"));
   Wt::Utils::insert(cssNames, Wt::Property::StyleFlexFlow,std::string("flex-flow"));
   Wt::Utils::insert(cssNames, Wt::Property::StyleAlignSelf,std::string("align-self"));
+  Wt::Utils::insert(cssNames, Wt::Property::StyleJustifySelf,std::string("justify-self"));
   Wt::Utils::insert(cssNames, Wt::Property::StyleAnchorName,std::string("anchor-name"));
   Wt::Utils::insert(cssNames, Wt::Property::StylePositionAnchor,std::string("position-anchor"));
   Wt::Utils::insert(cssNames, Wt::Property::StylePositionArea,std::string("position-area"));
@@ -342,6 +343,7 @@ CssPropertyMap createCssCamelNamesMap()
   Wt::Utils::insert(cssCamelNames, Wt::Property::StyleFlexDirection,std::string("flexDirection"));
   Wt::Utils::insert(cssCamelNames, Wt::Property::StyleFlexFlow,std::string("flexFlow"));
   Wt::Utils::insert(cssCamelNames, Wt::Property::StyleAlignSelf,std::string("alignSelf"));
+  Wt::Utils::insert(cssCamelNames, Wt::Property::StyleJustifySelf,std::string("justifySelf"));
   Wt::Utils::insert(cssCamelNames, Wt::Property::StyleAnchorName,std::string("anchorName"));
   Wt::Utils::insert(cssCamelNames, Wt::Property::StylePositionAnchor,std::string("positionAnchor"));
   Wt::Utils::insert(cssCamelNames, Wt::Property::StylePositionArea,std::string("positionArea"));
